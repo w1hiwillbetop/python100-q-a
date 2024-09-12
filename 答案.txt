@@ -1,0 +1,196 @@
+3：一个整数，它加上100后是一个完全平方数，再加上168又是一个完全平方数，请问该数是多少？
+import math
+def find_numbers():
+    results = set();#使用集合而非列表或者元组，因为集合元素非重复。
+    for i in range(1, 84):
+        if 168 % i == 0:
+            n1m = i;
+            n2m = 168 // i;
+            n = (n1m + n2m) / 2;
+            m = (n1m - n2m) / 2;
+            if n > m and n.is_integer() and m.is_integer():
+                results.add(int(m**2 - 100));
+    return results;
+print(find_numbers());
+4：输入某年某月某日，判断这一天是这一年的第几天？
+import math
+def what_day(year, month, date):
+    big = [1,3,5,7,8,10,12];
+    small = [4,6,9,11];
+    num = date;
+    while month > 1:
+        month = month - 1;
+        if month in big:
+            num = num + 31;
+        elif month in small:
+            num = num + 30;
+        else:
+            num = num + 28;
+    if (year % 4 == 0 and year % 100 != 0) or year % 400 == 0:#闰年
+        if month > 2:
+            num = num + 1
+    return num
+
+year = int(input())
+month = int(input())
+date = int(input())
+numb = what_day(year,month,date)
+print(f'这一天是这一年的第{numb}天');
+
+5.输入三个整数x,y,z，请把这三个数由小到大输出。
+import math
+def max_num(x1, y1, z1):
+    if x1 > y1:
+       x1, y1 = y1, x1
+    if y1 > z1:
+        y1, z1 = z1, y1
+    if x1 > z1:
+        x1, z1 = z1, x1
+    return x1, y1, z1
+
+x, y, z = map(int, input().split())
+x1, y1, z1 = max_num(x, y, z)
+print(x1, y1, z1)
+
+6.斐波那契数列（Fibonacci sequence），又称黄金分割数列，指的是这样一个数列：0、1、1、2、3、5、8、13、21、34、……。
+import math
+def fib(num0):
+    if num0 == 0:
+        return 0
+    elif num0 == 1:
+        return 1
+    else:
+        return fib(num0-1) + fib(num0-2)
+
+a = input('要输出斐波那契数列的第几项？\n')
+print(fib(int(a)))
+
+
+7.将一个列表的数据复制到另一个列表中
+import math
+#列表复制分为浅拷贝和深拷贝，深拷贝是指针两个
+#指针指向同一个内容，浅拷贝就是简单一点只是把内容复制一下
+
+def copy1(list1):##深拷贝
+    list2 = list1
+    return list2
+def copy2(list1):##浅拷贝
+    list2 = list1[:]
+    return list2
+
+
+list3 = list(map(int, input().split(",")))
+print(list3)
+print(copy1(list3))
+print(copy2(list3))
+
+
+8.输出 9*9 乘法口诀表。
+import math
+def multiplication_list():
+    for i in range(1,9):
+        print(f'{i}x{i} = {i**2}')
+
+print("输入Yes,输出9*9乘法表")
+if input() == 'Yes':
+    multiplication_list()
+else:
+    print('非法输入')
+
+9.暂停一秒输出。
+import time#导入time库
+def p_time(a):
+    time.sleep(a)
+curtime1 = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+print('暂停前的时间是'+curtime1)
+print('请输入要暂停程序使用的时间？')
+p_time(int(input()))
+curtime2 = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+print('暂停后的时间是'+curtime2)
+
+
+10.暂停一秒输出，并格式化当前时间。
+import time#导入time库
+def timeandstrf():
+    time.sleep(1)
+    #strftime的意思是string format time
+    #strftime(format,t)format里面是一个字符串
+    current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    print("当前时间：",current_time)
+
+print('下面为当前时间暂停一秒后的时间:\n')
+timeandstrf()
+
+
+11.古典问题：有一对兔子，从出生后第3个月起每个月都生一对兔子，小兔子长到第三个月后每个月又生一对兔子，假如兔子都不死，问每个月的兔子总数为多少？
+import math
+#简单算一下每个月的兔子对数是1,1,2,3,5,8,13,21
+#就是从第三个月开始，每个月都是前两个月相加
+def sum_rabbit(month):
+    if month == 1 or month == 2:
+        return 2
+    else:
+        return sum_rabbit(month-1) * 2 + sum_rabbit(month-2) * 2
+
+month = int(input('请输入算地几个月的兔子总数'))
+print(sum_rabbit(month))
+
+12.判断101-200之间有多少个素数，并输出所有素数。
+import math
+def is_sushu():
+    for i in range(101, 201):
+        is_su = 1
+        for j in range(2, int(math.sqrt(i))):
+            if i % j == 0:
+                is_su = 0
+                break
+        if is_su:
+            print(i)
+
+print('下面为101-200之间的所有素数')
+is_sushu()
+
+
+13.打印出所有的"水仙花数"，所谓"水仙花数"是指一个三位数，其各位数字立方和等于该数本身。例如：153是一个"水仙花数"，因为153=1的三次方＋5的三次方＋3的三次方。
+
+import math
+def shuixianhua():
+    for i in range(100, 1000):
+        ge = i % 10
+        shi = i // 10 % 10
+        bai = i // 100
+        if ge**3 + shi**3 + bai**3 == i:
+            print(i)
+
+shuixianhua()
+
+14.将一个正整数分解质因数。例如入90,打印出90=2*3*3*5
+
+import math
+def yinshifenjie(a):
+    items = []
+    zhi = 2
+    while a > 1:
+        while a % zhi == 0:
+            items.append(zhi)
+            a = a // zhi
+        zhi += 1
+    return items
+
+a = input('请输入因式分解的整数')
+a = int(a)
+yinshi = yinshifenjie(a)
+print(f'{a}=',end='')
+j = 1
+for i in yinshi:
+    if j != len(yinshi):
+        print(f'{i}*',end='')
+        j += 1
+    else:
+        print(f'{i}.',end='')
+
+
+
+
+
+
